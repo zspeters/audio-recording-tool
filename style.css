@@ -1,0 +1,48 @@
+h1 {
+    color: #1D1905;
+    margin-bottom: 1em;
+}
+
+body {
+    background-color: #FFCD03;
+}
+
+.post-break {
+    min-height: 100%;
+    background-color: #FFCD03;
+    margin-top: 2em;
+}
+
+.pre-break {
+    margin-bottom: 0;
+    background-color:#FFAE00;
+    color: #172617;
+}
+
+.Qholder {
+    border-radius: 3% 3% 3% 3%;
+    background-color: #FF8E03;
+}
+
+.Qbar {
+    margin-top: 1em;
+}
+
+.Qaddon {
+    color: #1D1905;
+    background-color: #FFC107;
+    border-color: #1D1905;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.Qbody {
+    margin-top: 0.7em;
+    font-weight: 500;
+    color: #1D1905;
+}
+
+.btn-warning {
+    color: #1D1905;
+    border-color: #1D1905;
+}
