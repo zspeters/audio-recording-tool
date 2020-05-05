@@ -1,80 +1,82 @@
 h1 {
-    color: #1D1905;
     margin-bottom: 1em;
 }
 
 h2 {
-    color: #1D1905;
     font-size: 130%;
     margin-top: 0.5em;
 }
 
-body {
-    background-color: #FFCD03;
+html, body {
+    height: 100%;
+    overflow: hidden;
+    background-color: transparent;
 }
 
-.post-break {
-    min-height: 100%;
-    background-color: #FFCD03;
-    margin-top: 2em;
+.jumbotron {
+    background-color: transparent;
 }
 
 .pre-break {
-    margin-bottom: 0;
-    background-color:#FFAE00;
-    color: #172617;
+    width: 100%;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
-#container-q {
-    border-radius: 3% 3% 3% 3%;
-    background-color: #FF8E03;
+.post-break {
+    background-color: #E1F5FE;
+    height: 100%;
+    padding: 0.5%;
 }
 
-.Qbar {
+.btn {
+    background-color: #03A9F4 !important;
+    color: #000 !important;
+    border-color: #000 !important;
+}
+
+.q-bar {
     margin-top: 1em;
 }
 
-.Qaddon {
-    color: #1D1905;
-    background-color: #FFC107;
-    border-color: #1D1905;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+.q-btns {
+    min-height: 100%;
 }
 
-.Qbody {
+.q-addon {
+    border-color: #000;
+    border-radius: 0 inherit inherit 0;
+}
+
+.q-body {
     margin-top: 0.7em;
     font-weight: 500;
-    color: #1D1905;
 }
 
 #container-rec {
-    border-radius: 3% 3% 3% 3%;
-    background-color: #FF8E03;
+    border-radius: 3%;
     margin-top: 1em;
 }
 
-.Rbar {
+.r-bar {
     margin-top: 1em;
-}
-
-.btn-warning {
-    color: #1D1905;
-    border-color: #1D1905;
 }
 
 #rec-btn {
-    border-right-width: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    min-height: 100%;
 }
 
-#rec-play-btn {
+/* #rec-play-btn {
+    border-right-width: 0;
+    border-radius: 0;
+} */
+
+.q-counter {
     border-right-width: 0;
     border-radius: 0;
 }
 
-#next-Q {
+#next-q {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -91,13 +93,10 @@ body {
 }
 
 #q-num {
-    cursor: default;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-#q-num:hover {
-    color: #1D1905;
-    border-color: #1D1905;
-    background-color: #ffc107;
+.no-click {
+    cursor: default !important;
 }

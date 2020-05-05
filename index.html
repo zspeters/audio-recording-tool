@@ -18,85 +18,92 @@
     <link rel="stylesheet" type="text/css" href="includes/css/main.css">
     <script type="text/javascript" charset="utf-8" src="includes/js/main.js"></script>
 
-    <title>iScribe Audio Recording Tool</title>
+    <title>CURAVoice</title>
 
 </head>
 
 <body>
-    <div class="jumbotron text-center pre-break">
-        <h1>iScribe</h1>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan mauris neque, eu tincidunt tortor
-            blandit aliquet. Sed malesuada varius nibh vitae finibus. Aliquam augue ex, accumsan convallis iaculis at,
-            malesuada a felis. Ut auctor ultricies mattis. Pellentesque at arcu finibus, lacinia sem at, tincidunt
-            mauris. Integer volutpat in eros mollis tempus. Vestibulum eu sem est.</p>
-    </div>
-    <!-- end pre-break-->
-    <!-- begin post-break-->
-    <div class="container-fluid post-break">
-        <!-- begin question-->
-        <div class="container-fluid Qholder" id="container-q">
-            <div class="row">
-                <div class="col-md-3">
-                    <!-- <div class="btn-group btn-group-toggle Qbar" data-toggle="buttons" role="group">
-                        <label class="btn btn-warning play-btn">
-                            <input type="radio" name="options" id="q-play-btn" autocomplete="off"><i
-                                class="fa fa-play" id="q-play-btn-icon"></i>
-                        </label>
-                        <label class="btn btn-warning">
-                            <input type="radio" name="options" id="option1" autocomplete="off"><i
-                                class="fa fa-repeat"></i>
-                        </label>
-                        <div class="input-group-append">
-                            <div class="input-group-text Qaddon">Question 1:</div>
+    <div class="container">
+
+        <div class="jumbotron text-center pre-break">
+            <h1>CURAVoice</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan mauris neque, eu tincidunt tortor
+                blandit aliquet. Sed malesuada varius nibh vitae finibus. Aliquam augue ex, accumsan convallis iaculis
+                at,
+                malesuada a felis. Ut auctor ultricies mattis. Pellentesque at arcu finibus, lacinia sem at, tincidunt
+                mauris. Integer volutpat in eros mollis tempus. Vestibulum eu sem est.</p>
+        </div>
+        <!-- end pre-break-->
+        <!-- begin post-break-->
+        <div class="container post-break">
+            <!-- begin question-->
+            <div class="container Qholder">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="btn-group btn-group-toggle q-bar" data-toggle="buttons" role="group"
+                            id="container-q-btns">
+                            <label>
+                                <button class="btn btn-warning q-btns" id="q-play-btn"><i class="fa fa-play"
+                                        id="q-play-btn-icon"></i></button>
+                            </label>
+                            <label>
+                                <button type="reset" class="btn btn-warning q-btns" id="q-replay-btn"><i
+                                        class="fa fa-repeat" id="q-replay-btn-icon"></i></button>
+                            </label>
+                            <label>
+                                <button type="button" class="btn btn-warning q-btns no-click" id="q-num">Question 1:
+                            </label>
                         </div>
-                    </div> -->
-                    <div class="btn-group btn-group-toggle Qbar" data-toggle="buttons" role="group" id="container-q-btns">
+                    </div>
+                    <p class="col-md-9 q-body">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan mauris neque, eu
+                        tincidunt tortor blandit aliquet. Sed malesuada varius nibh vitae finibus. Aliquam augue ex,
+                        accumsan convallis iaculis at, malesuada a felis?
+                    </p>
+                </div>
+            </div>
+            <!-- end question-->
+            <!-- begin response-->
+            <div class="container-fluid Rholder" id="container-rec">
+                <div class="row">
+                    <div class="col text-center">
+                        <h2>Your Response</h2>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="btn-group btn-group-toggle r-bar" data-toggle="buttons" role="group"
+                        id="container-rec-btns">
                         <label>
-                            <button class="btn btn-warning q-btns" id="q-play-btn"><i class="fa fa-play" id="q-play-btn-icon"></i></button>
+                            <button class="btn btn-warning" id="rec-btn"><i class="fa fa-circle"
+                                    id="rec-btn-icon"></i></button>
+                        </label>
+                        <!-- <label>
+                            <button class="btn btn-warning" id="rec-play-btn"><i class="fa fa-play"
+                                    id="rec-play-btn-icon"></i></button>
+                        </label> -->
+                        <audio controls id="player"></audio>
+                    </div>
+                </div>
+                <div class="d-flex flex-row justify-content-center">
+                    <div class="btn-group btn-group-toggle r-bar" data-toggle="buttons" role="group"
+                        id="q-nav">
+                        <label>
+                            <button class="btn btn-warning" id="prev-q"><i class="fa fa-chevron-left"></i> Previous Question</button>
                         </label>
                         <label>
-                            <button type="reset" class="btn btn-warning q-btns" id="q-replay-btn"><i class="fa fa-repeat" id="q-replay-btn-icon"></i></button>
+                            <button class="btn btn-warning no-click" id="q-counter">of 5</button>
                         </label>
                         <label>
-                            <button type="button" class="btn btn-warning q-btns" id="q-num">Question 1:
+                            <button class="btn btn-warning" id="next-q">Next Question <i class="fa fa-chevron-right"></i>
                         </label>
                     </div>
                 </div>
-                <p class="col-md-9 Qbody">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan mauris neque, eu
-                    tincidunt tortor blandit aliquet. Sed malesuada varius nibh vitae finibus. Aliquam augue ex,
-                    accumsan convallis iaculis at, malesuada a felis?
-                </p>
             </div>
+            <!-- end response-->
         </div>
-        <!-- end question-->
-        <!-- begin response-->
-        <div class="container-fluid Rholder" id="container-rec">
-            <div class="row">
-                <div class="col text-center">
-                    <h2>Your Response</h2>
-                </div>
-            </div>
-            <div class="d-flex flex-row justify-content-center">
-                <div class="btn-group btn-group-toggle Rbar" data-toggle="buttons" role="group" id="container-rec-btns">
-                    <label>
-                        <button class="btn btn-warning" id="rec-btn"><i class="fa fa-circle" id="rec-btn-icon"></i></button>
-                    </label>
-                    <label>
-                        <button class="btn btn-warning" id="rec-play-btn"><i class="fa fa-play" id="rec-play-btn-icon"></i></button>
-                    </label>
-                    <label>
-                        <button type="button" class="btn btn-warning" id="next-Q">Next Question <i
-                                class="fa fa-chevron-right"></i>
-                    </label>
-                </div>
-                <audio id="player"></audio>
-            </div>
-        </div>
-        <!-- end response-->
-    </div>
-    <!-- end post-break-->
+        <!-- end post-break-->
 
+    </div>
 </body>
 
 <footer>

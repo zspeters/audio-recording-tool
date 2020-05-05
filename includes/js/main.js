@@ -32,7 +32,7 @@ $(document).ready(function () {
             if (mediaRecorder.state == "recording") {
                 mediaRecorder.stop();
             }
-            
+
         } else {
 
             // disable all buttons
@@ -49,13 +49,21 @@ $(document).ready(function () {
                 mediaRecorder.ondataavailable = function (e) {
                     if (e.data.size > 0) {
                         recChunks.push(e.data);
-                        console.log('pushin');
                     }
 
                     if (mediaRecorder.state == 'inactive') {
                         const blob = new Blob(recChunks, { type: 'audio/' });
                         var url = URL.createObjectURL(blob);
                         $("#player").attr('src', url);
+
+                        const fd = new FormData();
+                        fd.append('blob', blob);
+
+                        fetch("includes/php/upload_handler.php", {
+                            method: 'post',
+                            body: fd
+                        }).catch(console.error);
+
                     }
                 }
 
@@ -73,21 +81,34 @@ $(document).ready(function () {
 
     });
 
-    $("#rec-play-btn").on("click", function () {
-        if ($("#rec-play-btn-icon").hasClass("fa-pause")) {
-            recBtns.prop("disabled", false);
-            changeButtons("#rec-play-btn-icon", 'fa-play', 'fa-pause');
-            player.pause();
-            $("#rec-play-btn").blur();
+    // helper to upload audio data to server
+    // function uploadAudio(blob) {
+    //     const fd = new FormData();
+    //     fd.append('blob', blob);
 
-        } else {
-            recBtns.prop("disabled", true);
-            changeButtons("#rec-play-btn-icon", 'fa-pause', 'fa-play');
-            $('#rec-play-btn').prop("disabled", false);
-            player.play();
-        }
-    });
+    //     fetch("includes/php/upload_handler.php", {
+    //         method: 'post',
+    //         body: fd
+    //     }).catch(console.error);
 
+    //     var ffmpeg = require('ffmpeg');
+    //     try {
+    //         var process = new ffmpeg("../php/uploads/blob");
+    //         process.then(function (audio) {
+    //             audio.fnExtractSoundToMP3('../php/uploads/blob.mp3', function (error, file) {
+    //                 if (!error)
+    //                     console.log('Audio file:' + file);
+    //             });
+    //         }, function (err) {
+    //             console.log('Error: ' + err);
+    //         });
+    //     } catch (e) {
+    //         console.log(e.code);
+    //         console.log(e.msg);
+    //     };
+    // };
+
+    // helper to manage buttons after audio finishes playback passively
     player.onended = function () {
         player.load();
         recBtns.prop("disabled", false);
@@ -95,6 +116,7 @@ $(document).ready(function () {
         changeButtons("#rec-play-btn-icon", 'fa-play', 'fa-pause');
     }
 
+    // helper to change button icons
     function changeButtons(btnID, add, remove) {
         $(btnID).addClass(add).removeClass(remove);
     }
