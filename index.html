@@ -37,64 +37,77 @@
         <!-- begin post-break-->
         <div class="container post-break">
             <!-- begin question-->
-            <div class="container Qholder">
-                <div class="row">
+            <div class="container-fluid Qholder">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h2 id="q-num">Question 1:</h2>
+                        </div>
+                        <div class="col-12 text-center align-self-center">
+                            <p id="q-body">How are you feeling today?</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col text-center">
+                            <audio controls src=""></audio>
+                        </div>
+                    </div>
+
+                <!-- <div class="row">
                     <div class="col-md-3">
                         <div class="btn-group btn-group-toggle q-bar" data-toggle="buttons" role="group"
                             id="container-q-btns">
                             <label>
-                                <button class="btn btn-warning q-btns" id="q-play-btn"><i class="fa fa-play"
+                                <button class="btn q-btns" id="q-play-btn"><i class="fa fa-play"
                                         id="q-play-btn-icon"></i></button>
                             </label>
                             <label>
-                                <button type="reset" class="btn btn-warning q-btns" id="q-replay-btn"><i
+                                <button type="reset" class="btn q-btns" id="q-replay-btn"><i
                                         class="fa fa-repeat" id="q-replay-btn-icon"></i></button>
                             </label>
                             <label>
-                                <button type="button" class="btn btn-warning q-btns no-click" id="q-num">Question 1:
+                                <button type="button" class="btn q-btns no-click" id="q-num">Question 1:
                             </label>
                         </div>
                     </div>
-                    <p class="col-md-9 q-body">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin accumsan mauris neque, eu
-                        tincidunt tortor blandit aliquet. Sed malesuada varius nibh vitae finibus. Aliquam augue ex,
-                        accumsan convallis iaculis at, malesuada a felis?
+                    <p class="col-md-9" id="q-body">
+                        How are you feeling today?
                     </p>
-                </div>
+                </div> -->
+
             </div>
             <!-- end question-->
             <!-- begin response-->
             <div class="container-fluid Rholder" id="container-rec">
                 <div class="row">
                     <div class="col text-center">
-                        <h2>Your Response</h2>
+                        <h2>Your Response:</h2>
                     </div>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
                     <div class="btn-group btn-group-toggle r-bar" data-toggle="buttons" role="group"
                         id="container-rec-btns">
                         <label>
-                            <button class="btn btn-warning" id="rec-btn"><i class="fa fa-circle"
+                            <button class="btn" id="rec-btn"><i class="fa fa-circle"
                                     id="rec-btn-icon"></i></button>
                         </label>
                         <!-- <label>
-                            <button class="btn btn-warning" id="rec-play-btn"><i class="fa fa-play"
+                            <button class="btn " id="rec-play-btn"><i class="fa fa-play"
                                     id="rec-play-btn-icon"></i></button>
                         </label> -->
-                        <audio controls id="player"></audio>
+                        <audio controls id="resp-player"></audio>
                     </div>
                 </div>
                 <div class="d-flex flex-row justify-content-center">
                     <div class="btn-group btn-group-toggle r-bar" data-toggle="buttons" role="group"
                         id="q-nav">
                         <label>
-                            <button class="btn btn-warning" id="prev-q"><i class="fa fa-chevron-left"></i> Previous Question</button>
+                            <button class="btn" id="prev-q"><i class="fa fa-chevron-left"></i> Previous Question</button>
                         </label>
                         <label>
-                            <button class="btn btn-warning no-click" id="q-counter">of 5</button>
+                            <button class="btn no-click" id="q-counter">1 of 5</button>
                         </label>
                         <label>
-                            <button class="btn btn-warning" id="next-q">Next Question <i class="fa fa-chevron-right"></i>
+                            <button class="btn" id="next-q">Next Question <i class="fa fa-chevron-right"></i>
                         </label>
                     </div>
                 </div>

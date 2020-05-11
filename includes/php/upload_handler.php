@@ -25,7 +25,7 @@
 
 // print_r(scandir('.'));
 
-$target = 'uploads/' . basename($_FILES['blob']['name']);
+$target = '../../audio/responses/' . basename($_FILES['blob']['name']) . '.webm';
 move_uploaded_file($_FILES['blob']['tmp_name'], $target);
 
 ?>

@@ -48,9 +48,10 @@ html, body {
     border-radius: 0 inherit inherit 0;
 }
 
-.q-body {
-    margin-top: 0.7em;
+#q-body {
+    margin: 0.7em 3em 1.5em 3em;
     font-weight: 500;
+    height: 2em;
 }
 
 #container-rec {
@@ -71,7 +72,13 @@ html, body {
     border-radius: 0;
 } */
 
-.q-counter {
+#prev-q {
+    border-right-width: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#q-counter {
     border-right-width: 0;
     border-radius: 0;
 }

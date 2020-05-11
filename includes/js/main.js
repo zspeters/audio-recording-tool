@@ -1,11 +1,10 @@
 $(document).ready(function () {
 
-    var player = document.getElementById('player');
+    var respPlayer = document.getElementById('resp-player');
 
     var recBtns = $("#container-rec-btns").find(".btn");
 
     $("#q-play-btn").on("click", function () {
-
 
         if ($("#q-play-btn-icon").hasClass("fa-pause")) {
             $("#q-play-btn-icon").addClass("fa-play").removeClass("fa-pause");
@@ -38,8 +37,7 @@ $(document).ready(function () {
             // disable all buttons
             container.find(".btn").prop("disabled", true);
 
-            // function to start recording
-
+            // start recording
             var recChunks = [];
 
             navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function (stream) {
@@ -52,18 +50,17 @@ $(document).ready(function () {
                     }
 
                     if (mediaRecorder.state == 'inactive') {
-                        const blob = new Blob(recChunks, { type: 'audio/' });
+                        const blob = new Blob(recChunks, { type: 'audio/webm' });
                         var url = URL.createObjectURL(blob);
-                        $("#player").attr('src', url);
+                        $("#resp-player").attr('src', url);
 
-                        const fd = new FormData();
-                        fd.append('blob', blob);
-
-                        fetch("includes/php/upload_handler.php", {
-                            method: 'post',
-                            body: fd
-                        }).catch(console.error);
-
+                        if (qCounter < 4) {
+                            console.log(qCounter);
+                            $('#next-q').one("click", uploadResp('blob', blob));
+                        } else {
+                            console.log(qCounter);
+                            uploadResp('blob', blob);
+                        }
                     }
                 }
 
@@ -74,51 +71,63 @@ $(document).ready(function () {
             // update the buttons
             changeButtons('#rec-btn-icon', 'fa-stop', 'fa-circle');
             $("#rec-btn").prop("disabled", false);
-
         }
-
-
-
     });
 
-    // helper to upload audio data to server
-    // function uploadAudio(blob) {
-    //     const fd = new FormData();
-    //     fd.append('blob', blob);
+    // navigate questions
+    const qTextArr = [
+        "How are you feeling today?",
+        "How long have you felt this way?",
+        "How are things going at work?",
+        "Do you smoke cigarettes or cannabis, or drink alcohol? Are you on any medication or any illicit drugs?",
+        "Are you married? Do you have any children? How is your social life?"
+    ];
+    let qCounter = 0;
 
-    //     fetch("includes/php/upload_handler.php", {
-    //         method: 'post',
-    //         body: fd
-    //     }).catch(console.error);
+    $('#next-q').on("click", function () {
+        if ((4 > qCounter) && (qCounter >= 0)) {
+            qCounter++;
+            $('#q-body').text(qTextArr[qCounter]);
+            $('#q-counter').text(`${qCounter + 1} of 5`);
+            $('#q-num').text(`Question ${qCounter + 1}:`);
+        }
+    });
 
-    //     var ffmpeg = require('ffmpeg');
-    //     try {
-    //         var process = new ffmpeg("../php/uploads/blob");
-    //         process.then(function (audio) {
-    //             audio.fnExtractSoundToMP3('../php/uploads/blob.mp3', function (error, file) {
-    //                 if (!error)
-    //                     console.log('Audio file:' + file);
-    //             });
-    //         }, function (err) {
-    //             console.log('Error: ' + err);
-    //         });
-    //     } catch (e) {
-    //         console.log(e.code);
-    //         console.log(e.msg);
-    //     };
-    // };
+    $('#prev-q').on("click", function () {
+        if ((5 > qCounter) && (qCounter > 0)) {
+            qCounter--;
+            $('#q-body').text(qTextArr[qCounter]);
+            $('#q-counter').text(`${qCounter + 1} of 5`);
+            $('#q-num').text(`Question ${qCounter + 1}:`);
+        }
+    });
+    // end navigate questions
+
+    // helper to upload responses
+    function uploadResp(respName, respData) {
+        let fd = new FormData();
+        fd.append(respName, respData);
+
+        fetch("includes/php/upload_handler.php", {
+            method: 'post',
+            body: fd
+        }).catch(console.error);
+    }
+    // end helper - upload responses
 
     // helper to manage buttons after audio finishes playback passively
-    player.onended = function () {
-        player.load();
+    respPlayer.onended = function () {
+        respPlayer.load();
         recBtns.prop("disabled", false);
         recBtns.removeClass('active');
         changeButtons("#rec-play-btn-icon", 'fa-play', 'fa-pause');
     }
+    // end helper - button management
 
     // helper to change button icons
     function changeButtons(btnID, add, remove) {
         $(btnID).addClass(add).removeClass(remove);
     }
+    // end helper - icon change
 
 });
