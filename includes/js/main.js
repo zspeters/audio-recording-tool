@@ -1,5 +1,33 @@
 $(document).ready(function () {
 
+    // handle cookies
+    function createCookie(days) {
+        let date = new Date();
+        let name = 'userDir=' + date.getTime().toString();
+        date.setTime(date.getTime() + (days * 24 * 3600 * 1000));
+        let expires = "; expires=" + date.toGMTString();
+        document.cookie = name + expires;
+    }
+
+    let userDir = '';
+    // create cookie if none stored, else store cookie value in userDir
+    if (document.cookie) {
+        let cookieArr = document.cookie.split(';');
+        for (let i = 0; i < cookieArr.length; i++) {
+            let str = cookieArr[i];
+            while (str.charAt(0) == ' ') {
+                str = str.substring(1, str.length)
+            }
+            if (str.indexOf("userDir=") == 0) {
+                userDir = str.substring("userDir=".length, str.length)
+            }
+            break;
+        }
+    } else {
+        createCookie(30);
+    }
+    // end cookie handling
+
     var respPlayer = document.getElementById('resp-player');
 
     var recBtns = $("#container-rec-btns").find(".btn");
@@ -54,21 +82,24 @@ $(document).ready(function () {
                         var url = URL.createObjectURL(blob);
                         $("#resp-player").attr('src', url);
 
+                        // upload on navigation to next question if Q1-Q4
                         if (qCounter < 4) {
-                            console.log(qCounter);
-                            $('#next-q').one("click", uploadResp('blob', blob));
+                            $('#next-q').on("click", function (event) {
+                                uploadResp(qCounter, blob);
+                                $('this').off(event);
+                            });
+                            // upload immediately after recording Q5
                         } else {
-                            console.log(qCounter);
-                            uploadResp('blob', blob);
+                            uploadResp(qCounter + 1, blob);
                         }
                     }
                 }
 
                 mediaRecorder.start(1000);
 
-            });
+            }).catch(alert);
 
-            // update the buttons
+            // update buttons
             changeButtons('#rec-btn-icon', 'fa-stop', 'fa-circle');
             $("#rec-btn").prop("disabled", false);
         }
@@ -91,6 +122,9 @@ $(document).ready(function () {
             $('#q-counter').text(`${qCounter + 1} of 5`);
             $('#q-num').text(`Question ${qCounter + 1}:`);
         }
+        if (4 == qCounter) {
+            $('#next-q').text('Finish and Upload');
+        }
     });
 
     $('#prev-q').on("click", function () {
@@ -100,13 +134,18 @@ $(document).ready(function () {
             $('#q-counter').text(`${qCounter + 1} of 5`);
             $('#q-num').text(`Question ${qCounter + 1}:`);
         }
+        if (3 == qCounter) {
+            $('#next-q').html('Next Question <i class="fa fa-chevron-right"></i>');
+        }
     });
     // end navigate questions
 
     // helper to upload responses
-    function uploadResp(respName, respData) {
+    function uploadResp(qNum, respData) {
         let fd = new FormData();
-        fd.append(respName, respData);
+        fd.append(qNum, respData, 'q' + qNum + 'response');
+        fd.append('userDir', userDir);
+        fd.append('qNum', qNum);
 
         fetch("includes/php/upload_handler.php", {
             method: 'post',

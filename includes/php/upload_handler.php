@@ -1,31 +1,11 @@
 <?php
 
-// if (isset($_POST['submit'])) {
-//     $file = $_FILES['file'];
+$qNum = $_POST['qNum']['name'];
+$targetDir = '../../audio/responses/' . $_POST['userDir'];
+$target = $targetDir . '/' . basename($_FILES[$qNum]['name']) . '.webm';
 
-//     $fileName = $file['name'];
-//     $fileTmpName = $file['tmp_name'];
-//     $fileSize = $file['size'];
-//     $fileError = $file['error'];
-//     $fileType = $file['type'];
+mkdir($targetDir, 0777, true);
+move_uploaded_file($_FILES[$qNum]['tmp_name'], $target);
 
-//     $fileExt = explode('.', $fileName);
-//     $fileExtLwr = strtolower(end($fileExt));
-
-//     if($fileError === 0) {
-//         $fileNameNew = uniqid('', true).".".$fileExtLwr;
-//         $fileDest = 'uploads/'.$fileNameNew;
-//         move_uploaded_file($fileTmpName, $fileDest);
-//         echo "You did it!";
-//     } else {
-//         echo "Upload error";
-//     }
-
-// }
-
-// print_r(scandir('.'));
-
-$target = '../../audio/responses/' . basename($_FILES['blob']['name']) . '.webm';
-move_uploaded_file($_FILES['blob']['tmp_name'], $target);
 
 ?>
