@@ -26,6 +26,34 @@ $(document).ready(function() {
         }
     });
 
+    // handle cookies
+    function createCookie(days) {
+        let date = new Date();
+        userDir = date.getTime().toString();
+        let name = 'userDir=' + userDir;
+        date.setTime(date.getTime() + (days * 24 * 3600 * 1000));
+        let expires = "; expires=" + date.toGMTString();
+        document.cookie = name + expires;
+    }
+
+    // create cookie if none stored, else store cookie value in userDir
+    if (document.cookie) {
+        let cookieArr = document.cookie.split(';');
+        for (let i = 0; i < cookieArr.length; i++) {
+            let str = cookieArr[i];
+            while (str.charAt(0) == ' ') {
+                str = str.substring(1, str.length)
+            }
+            if (str.indexOf("userDir=") == 0) {
+                userDir = str.substring("userDir=".length, str.length)
+            }
+            break;
+        }
+    } else {
+        createCookie(30);
+    }
+    // end cookie handling
+
     // handle response recording
     recBtn.on("click", function() {
         let container = $("#container-rec-btns");
