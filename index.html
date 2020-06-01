@@ -62,11 +62,13 @@
                             <div class="btn-group" role="group" id="container-rec-btns" aria-label="Voice recording buttons">
                                 <button type="button" class="btn btn-primary rec-btns" onclick="this.blur();" id="rec-btn"><i class="fa fa-circle"
                                         id="rec-btn-icon"></i></button>
-                                <button type="button" class="btn btn-primary rec-btns" onclick="this.blur();" id="rec-pause-btn"><i class="fa fa-pause"
+                                <button type="button" class="btn btn-primary rec-btns" onclick="this.blur();" disabled="true" id="rec-pause-btn"><i class="fa fa-pause"
                                         id="rec-pause-btn-icon"></i></button>
-                                <button type="button" class="btn btn-primary rec-btns" onclick="this.blur();" id="rec-stop-btn"><i class="fa fa-stop"
+                                <button type="button" class="btn btn-primary rec-btns" onclick="this.blur();" disabled="true" id="rec-stop-btn"><i class="fa fa-stop"
                                         id="rec-stop-btn-icon"></i></button>
                             </div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-center">
                             <audio controls id="resp-player"></audio>
                         </div>
                     </div>

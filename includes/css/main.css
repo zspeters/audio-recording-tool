@@ -71,6 +71,7 @@ audio {
 
 #container-rec-btns {
     max-height: 2.4em;
+    margin: 0.7em;
 }
 
 #q-nav {
