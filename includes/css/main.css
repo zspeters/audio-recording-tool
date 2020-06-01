@@ -1,3 +1,10 @@
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    background-color: transparent;
+}
+
 h1 {
     margin-bottom: 1em;
 }
@@ -7,10 +14,30 @@ h2 {
     margin-top: 0.5em;
 }
 
-html, body {
-    height: 100%;
-    overflow: hidden;
-    background-color: transparent;
+audio {
+    outline: none;
+}
+
+.fullscreen {
+    min-width: 100% !important;
+    height: 100% !important;
+    margin: 0;
+    padding: 0;
+}
+
+.modal * {
+    justify-content: center;
+    align-items: center;
+}
+
+.btn {
+    /* background-color: #03A9F4 !important;
+    color: #000 !important; */
+    /* border-color: #000 !important; */
+}
+
+.btn-primary {
+    color: #000;
 }
 
 .jumbotron {
@@ -27,25 +54,13 @@ html, body {
     background-color: #E1F5FE;
     height: 100%;
     padding: 0.5%;
+    display: flex;
+    flex-direction: column;
 }
 
-.btn {
-    background-color: #03A9F4 !important;
-    color: #000 !important;
-    border-color: #000 !important;
-}
-
-.q-bar {
-    margin-top: 1em;
-}
-
-.q-btns {
-    min-height: 100%;
-}
-
-.q-addon {
-    border-color: #000;
-    border-radius: 0 inherit inherit 0;
+#q-num {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 #q-body {
@@ -54,23 +69,13 @@ html, body {
     height: 2em;
 }
 
-#container-rec {
-    border-radius: 3%;
+#container-rec-btns {
+    max-height: 2.4em;
+}
+
+#q-nav {
     margin-top: 1em;
 }
-
-.r-bar {
-    margin-top: 1em;
-}
-
-#rec-btn {
-    min-height: 100%;
-}
-
-/* #rec-play-btn {
-    border-right-width: 0;
-    border-radius: 0;
-} */
 
 #prev-q {
     border-right-width: 0;
@@ -84,22 +89,6 @@ html, body {
 }
 
 #next-q {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-#q-play-btn {
-    border-right-width: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-#q-replay-btn {
-    border-right-width: 0;
-    border-radius: 0;
-}
-
-#q-num {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }

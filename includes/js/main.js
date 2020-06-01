@@ -1,15 +1,41 @@
-$(document).ready(function () {
+$(document).ready(function() {
+
+    let userEmail = '';
+    let qPlayer = $('#q-player');
+    let qPlayerPath = 'audio/questions/q';
+    let qPlayerSrc = '';
+    let recBtns = $("#container-rec-btns").find(".btn");
+    let recBtn = $('#rec-btn');
+    let recStopBtn = $('#rec-stop-btn');
+    let recPauseBtn = $('#rec-pause-btn');
+    let respPlayer = document.getElementById('resp-player');
+    let prevQBtn = $('#prev-q');
+    let qCounter = 0;
+    let nextQBtn = $('#next-q');
+
+    $('.modal').modal('show');
+
+    $('#user-email-form').submit(function(event) {
+        event.preventDefault();
+        userEmail = $("#user-email-form :input").serializeArray()[0]['value'];
+        if (!userEmail) {
+            alert('Your email address was not recorded. Please refresh the page.');
+        } else {
+            $('.modal').modal('hide');
+            qPlayer.trigger('play');
+        }
+    });
 
     // handle cookies
     function createCookie(days) {
         let date = new Date();
-        let name = 'userDir=' + date.getTime().toString();
+        userDir = date.getTime().toString();
+        let name = 'userDir=' + userDir;
         date.setTime(date.getTime() + (days * 24 * 3600 * 1000));
         let expires = "; expires=" + date.toGMTString();
         document.cookie = name + expires;
     }
 
-    let userDir = '';
     // create cookie if none stored, else store cookie value in userDir
     if (document.cookie) {
         let cookieArr = document.cookie.split(';');
@@ -28,29 +54,12 @@ $(document).ready(function () {
     }
     // end cookie handling
 
-    var respPlayer = document.getElementById('resp-player');
-
-    var recBtns = $("#container-rec-btns").find(".btn");
-
-    $("#q-play-btn").on("click", function () {
-
-        if ($("#q-play-btn-icon").hasClass("fa-pause")) {
-            $("#q-play-btn-icon").addClass("fa-play").removeClass("fa-pause");
-            $("#q-play-btn").blur();
-
-        } else {
-            $("#q-play-btn-icon").removeClass("fa-play").addClass("fa-pause");
-
-            // play question
-
-            $("#q-play-btn").blur();
-        }
-    });
-
-    $("#rec-btn").on("click", function () {
-        var container = $("#container-rec-btns");
+    // handle response recording
+    recBtn.on("click", function() {
+        let container = $("#container-rec-btns");
 
         if ($("#rec-btn-icon").hasClass("fa-stop")) {
+            // reenable rec btns when stopping recording
             container.find(".btn").prop("disabled", false);
             $("#rec-btn-icon").addClass("fa-circle").removeClass("fa-stop");
             $("#rec-btn").blur();
@@ -66,13 +75,13 @@ $(document).ready(function () {
             container.find(".btn").prop("disabled", true);
 
             // start recording
-            var recChunks = [];
+            let recChunks = [];
 
-            navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function (stream) {
+            navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(function(stream) {
 
                 mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
 
-                mediaRecorder.ondataavailable = function (e) {
+                mediaRecorder.ondataavailable = function(e) {
                     if (e.data.size > 0) {
                         recChunks.push(e.data);
                     }
@@ -84,7 +93,7 @@ $(document).ready(function () {
 
                         // upload on navigation to next question if Q1-Q4
                         if (qCounter < 4) {
-                            $('#next-q').on("click", function (event) {
+                            nextQBtn.on("click", function(event) {
                                 uploadResp(qCounter, blob);
                                 $('this').off(event);
                             });
@@ -104,6 +113,7 @@ $(document).ready(function () {
             $("#rec-btn").prop("disabled", false);
         }
     });
+    // end handle response recording
 
     // navigate questions
     const qTextArr = [
@@ -113,29 +123,50 @@ $(document).ready(function () {
         "Do you smoke cigarettes or cannabis, or drink alcohol? Are you on any medication or any illicit drugs?",
         "Are you married? Do you have any children? How is your social life?"
     ];
-    let qCounter = 0;
 
-    $('#next-q').on("click", function () {
+    nextQBtn.on("click", function() {
+        // enabled 'Previous Question' button when not on Q1
+        if (0 == qCounter) {
+            prevQBtn.attr('disabled', false);
+            prevQBtn.removeClass('no-click');
+        }
         if ((4 > qCounter) && (qCounter >= 0)) {
             qCounter++;
+            // change question audio source
+            qPlayerSrc = qPlayerPath + (qCounter + 1).toString() + '.mp3';
+            console.log(qPlayerSrc);
+            qPlayer.attr('src', qPlayerSrc);
+            // change nav button text
             $('#q-body').text(qTextArr[qCounter]);
             $('#q-counter').text(`${qCounter + 1} of 5`);
             $('#q-num').text(`Question ${qCounter + 1}:`);
         }
         if (4 == qCounter) {
-            $('#next-q').text('Finish and Upload');
+            // change 'Next Question >' text to 'Finish and Upload' on last question
+            nextQBtn.text('Finish and Upload');
         }
     });
 
-    $('#prev-q').on("click", function () {
+    prevQBtn.on("click", function() {
+        // disabled '< Previous Question' button on Q1
+        if (1 == qCounter) {
+            prevQBtn.attr('disabled', true);
+            prevQBtn.addClass('no-click');
+        }
         if ((5 > qCounter) && (qCounter > 0)) {
             qCounter--;
+            // change question audio source
+            qPlayerSrc = qPlayerPath + (qCounter + 1).toString() + '.mp3';
+            console.log(qPlayerSrc);
+            qPlayer.attr('src', qPlayerSrc);
+            // change nav button text
             $('#q-body').text(qTextArr[qCounter]);
             $('#q-counter').text(`${qCounter + 1} of 5`);
             $('#q-num').text(`Question ${qCounter + 1}:`);
         }
         if (3 == qCounter) {
-            $('#next-q').html('Next Question <i class="fa fa-chevron-right"></i>');
+            // change 'Finish and Upload' text back to 'Next Question >'
+            nextQBtn.html('Next Question <i class="fa fa-chevron-right"></i>');
         }
     });
     // end navigate questions
@@ -144,7 +175,7 @@ $(document).ready(function () {
     function uploadResp(qNum, respData) {
         let fd = new FormData();
         fd.append(qNum, respData, 'q' + qNum + 'response');
-        fd.append('userDir', userDir);
+        fd.append('userEmail', userEmail);
         fd.append('qNum', qNum);
 
         fetch("includes/php/upload_handler.php", {
@@ -154,14 +185,14 @@ $(document).ready(function () {
     }
     // end helper - upload responses
 
-    // helper to manage buttons after audio finishes playback passively
-    respPlayer.onended = function () {
-        respPlayer.load();
-        recBtns.prop("disabled", false);
-        recBtns.removeClass('active');
-        changeButtons("#rec-play-btn-icon", 'fa-play', 'fa-pause');
-    }
-    // end helper - button management
+    // helper to manage buttons after response audio finishes playback passively
+    respPlayer.onended = function() {
+            respPlayer.load();
+            recBtns.prop("disabled", false);
+            recBtns.removeClass('active');
+            changeButtons("#rec-play-btn-icon", 'fa-play', 'fa-pause');
+        }
+        // end helper - button management
 
     // helper to change button icons
     function changeButtons(btnID, add, remove) {
