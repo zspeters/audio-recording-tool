@@ -1,9 +1,8 @@
 $(document).ready(function() {
 
-    let userEmail = '';
     let qPlayer = $('#q-player');
     let recordingNow = false;
-    let recBtns = $("#container-rec-btns").find(".btn");
+    let recBtns = $('#container-rec-btns').find('.btn');
     let recBtn = $('#rec-btn');
     let recStopBtn = $('#rec-stop-btn');
     let recPauseBtn = $('#rec-pause-btn');
@@ -12,6 +11,11 @@ $(document).ready(function() {
     let prevQBtn = $('#prev-q');
     let qCounter = 0;
     let nextQBtn = $('#next-q');
+
+    //edit these if index directory changes
+    let qDir = '../audio/questions';
+    let qFileLoc = qDir;
+    let phpDir = "../includes/php";
 
     const qTextArr = [
         "How are you feeling today?",
@@ -22,21 +26,12 @@ $(document).ready(function() {
     ];
     const qPlayerSrcArr = [];
     for (let i = 1; i < 6; i++) {
-        qPlayerSrcArr.push('audio/questions/q' + i.toString() + '.mp3');
+        qFileLoc = `${qDir}/q${i.toString()}.mp3`;
+        qPlayerSrcArr.push(qFileLoc);
     }
 
+    // show modal on page load
     $('.modal').modal('show');
-
-    $('#user-email-form').submit(function(event) {
-        event.preventDefault();
-        userEmail = $("#user-email-form :input").serializeArray()[0]['value'];
-        if (!userEmail) {
-            alert('Your email address was not recorded. Please refresh the page.');
-        } else {
-            $('.modal').modal('hide');
-            qPlayer.trigger('play');
-        }
-    });
 
     // handle response recording
     recBtn.on("click", function() {
@@ -62,10 +57,17 @@ $(document).ready(function() {
                         respPlayerSrcArr[qCounter] = url;
                         respPlayer.attr('src', url);
 
-                        // upload on navigation to next question if Q1-Q4
                         if (qCounter < 4) {
-                            nextQBtn.on("click", function(event) {
+                            // upload on navigation to next question if Q1-Q4
+                            nextQBtn.on('click.navUpload', function(event) {
                                 uploadResp(qCounter, blob);
+                                prevQBtn.off('click.navUpload');
+                                $('this').off(event);
+                            });
+                            prevQBtn.on('click.navUpload', function(event) {
+                                uploadResp(qCounter + 2, blob);
+                                nextQBtn.off('click.navUpload');
+                                $('this').off(event);
                             });
                             // upload immediately after recording Q5
                         } else {
@@ -157,10 +159,11 @@ $(document).ready(function() {
     function uploadResp(qNum, respData) {
         let fd = new FormData();
         fd.append(qNum, respData, 'q' + qNum + 'response');
-        fd.append('userEmail', userEmail);
+        fd.append('userEmail', 'test@test.com');
         fd.append('qNum', qNum);
 
-        fetch("includes/php/upload_handler.php", {
+        let uploadHandlerDir = phpDir + "/handlers/upload_handler.php";
+        fetch(uploadHandlerDir, {
             method: 'post',
             body: fd
         }).catch(console.error);

@@ -1,21 +1,11 @@
 html,
 body {
     height: 100%;
-    overflow: hidden;
     background-color: transparent;
 }
 
 h1 {
     margin-bottom: 1em;
-}
-
-h2 {
-    font-size: 130%;
-    margin-top: 0.5em;
-}
-
-audio {
-    outline: none;
 }
 
 .fullscreen {
@@ -30,14 +20,35 @@ audio {
     align-items: center;
 }
 
-.btn {
-    /* background-color: #03A9F4 !important;
-    color: #000 !important; */
-    /* border-color: #000 !important; */
+#login-flex-col * {
+    margin: 0.2em;
+    padding: 0.5em;
 }
 
-.btn-primary {
-    color: #000;
+.reg-head {
+    font-size: 1rem !important;
+    padding: 0.1rem !important;
+}
+
+#reg-btn {
+    width: 8em;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    width: 0;
+    min-width: 100%;
+}
+
+.success-message {
+    color: green;
+    text-align: center;
+    padding: 1em;
+}
+
+#app-wrapper {
+    min-height: 100%;
 }
 
 .jumbotron {
@@ -50,12 +61,21 @@ audio {
     padding-right: 0px;
 }
 
-.post-break {
+#post-break {
     background-color: #E1F5FE;
-    height: 100%;
+    border-radius: 4px;
     padding: 0.5%;
     display: flex;
     flex-direction: column;
+}
+
+.h2-main {
+    font-size: 130%;
+    margin-top: 0.5em;
+}
+
+audio {
+    outline: none;
 }
 
 #q-num {
@@ -96,4 +116,17 @@ audio {
 
 .no-click {
     cursor: default !important;
+}
+
+#upload-error {
+    margin-top: 1em;
+}
+
+#sidebar-heading {
+    padding: 1rem 1rem;
+    font-size: 1.2rem;
+}
+
+#past-recordings-heading {
+    font-weight: 500;
 }
