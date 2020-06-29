@@ -114,6 +114,12 @@ audio {
     border-bottom-left-radius: 0;
 }
 
+#finished-message {
+    text-align: center;
+    color: green;
+    padding: 11em;
+}
+
 .no-click {
     cursor: default !important;
 }

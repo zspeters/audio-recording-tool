@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+    let postBreak = $('#post-break');
     let qPlayer = $('#q-player');
     let recordingNow = false;
     let recBtns = $('#container-rec-btns').find('.btn');
@@ -69,8 +70,8 @@ $(document).ready(function() {
                                 nextQBtn.off('click.navUpload');
                                 $('this').off(event);
                             });
-                            // upload immediately after recording Q5
                         } else {
+                            // upload immediately after recording Q5
                             uploadResp(qCounter + 1, blob);
                         }
 
@@ -131,10 +132,17 @@ $(document).ready(function() {
         if (4 == qCounter) {
             // change 'Next Question >' text to 'Finish and Upload' on last question
             nextQBtn.text('Finish and Upload');
+            nextQBtn.on('click.finishUpload', function() {
+                postBreak.html('<p id="finished-message">Your responses have been uploaded. Thank you for using CURAVoice.</p>');
+            });
         }
     });
 
-    prevQBtn.on("click", function() {
+    prevQBtn.on('click', function() {
+        // unbind nextQBtn click event to terminate session
+        if (4 == qCounter) {
+            nextQBtn.off('click.finishUpload');
+        }
         // disable '< Previous Question' button on Q1
         if (1 == qCounter) {
             prevQBtn.attr('disabled', true);
