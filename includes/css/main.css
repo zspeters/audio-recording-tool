@@ -20,9 +20,13 @@ h1 {
     align-items: center;
 }
 
-#login-flex-col * {
+#login-flex-col *, #pwd-reset-flex-col * {
     margin: 0.2em;
     padding: 0.5em;
+}
+
+#pwd-reset-flex-col button {
+    width: 100%;
 }
 
 .reg-head {
@@ -32,6 +36,18 @@ h1 {
 
 #reg-btn {
     width: 8em;
+}
+
+#pwd-reset-req-flex-col p {
+    padding: auto 50px;
+}
+
+#pwd-reset-req-flex-col h2 {
+    margin: 0.2em;
+}
+
+#pwd-reset-req-flex-col input {
+    margin: 0.5em;
 }
 
 .error-message {

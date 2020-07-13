@@ -16,8 +16,8 @@ $_SESSION['page'] = 'login';
         ?>
 
         <input type="password" name="login-pwd" placeholder="Password">
-        <a href="#" class="align-self-center">Forgot your password?</a>
+        <a href="?forgotpwd=req" class="align-self-center">Forgot your password?</a>
         <input type="submit" name="login-submit" class="btn btn-primary" value="Login">
-        <div>Don't have an account? <a href="?reg=show" id="reg-link">Register here</a></div>
+        <div class="align-self-center">Don't have an account? <a href="?reg=show" id="reg-link">Register here</a></div>
     </div>
 </form>

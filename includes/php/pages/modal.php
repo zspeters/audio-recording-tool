@@ -15,6 +15,20 @@
                         } else if ($_GET['reg'] == 'success') {
                             require 'success.php';
                         }
+                    } else if (isset($_GET['forgotpwd'])) {
+                        if ($_GET['forgotpwd'] == 'req') {
+                            require 'pwd_reset_req.php';
+                        } else if ($_GET['forgotpwd'] == 'sent') {
+                            require 'pwd_reset_sent.php';
+                        } else if ($_GET['forgotpwd'] == 'reset') {
+                            require 'pwd_reset.php';
+                        } else if ($_GET['forgotpwd'] == 'failed') {
+                            require 'pwd_reset_req.php';
+                        }
+                    } else if (isset($_GET['pwdreset'])) {
+                        if ($_GET['pwdreset'] == 'success') {
+                            require 'success.php';
+                        }
                     } else {
                         require 'login.php';
                     }
